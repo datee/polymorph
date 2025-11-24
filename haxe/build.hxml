@@ -1,0 +1,15 @@
+# Haxe build file for Polymorph example
+
+-cp src
+-main Example
+-dce full
+
+# Run with interpreter (default)
+--interp
+
+# Uncomment to compile to other targets:
+# -js bin/polymorph.js
+# -cpp bin/cpp
+# -cs bin/cs
+# -java bin/java
+# -python bin/polymorph.py
