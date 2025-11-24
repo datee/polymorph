@@ -13,6 +13,27 @@ This is a pure Haxe implementation with **no framework dependencies** that focus
 ✅ **Vanilla Haxe** - No external dependencies or frameworks
 ✅ **No Browser/JS Dependencies** - Pure path mathematics, works anywhere Haxe runs
 
+## 🎨 Live Demo
+
+Check out the **interactive canvas demo** in the `demo/` folder!
+
+```bash
+# Build the demo
+haxe build-demo.hxml
+
+# Serve it locally
+cd demo && python3 -m http.server 8000
+# Then open http://localhost:8000
+```
+
+The demo shows:
+- Real-time path morphing with HTML5 Canvas
+- Multiple shape examples (star, polygons, shapes with holes)
+- Interactive controls and auto-animation
+- Visual proof that the Haxe port works perfectly!
+
+See [demo/README.md](demo/README.md) for full details.
+
 ## What This Port Includes
 
 This port focuses on the core interpolation functionality:
@@ -214,11 +235,25 @@ Then run:
 haxe build.hxml
 ```
 
-## Running the Example
+## Running the Examples
+
+### Command-Line Example
 
 ```bash
 haxe -cp src -main Example --interp
 ```
+
+### Canvas Demo (JavaScript)
+
+```bash
+# Build the interactive canvas demo
+haxe build-demo.hxml
+
+# Serve and view in browser
+cd demo && python3 -m http.server 8000
+```
+
+The canvas demo compiles to JavaScript and provides a visual, interactive demonstration of the library.
 
 ## Platform Support
 

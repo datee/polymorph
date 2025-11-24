@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polymorph Haxe - Canvas Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        #exampleName {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            min-height: 30px;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: #f0f0f0;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .slider-container {
+            flex: 1;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: #45a049;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s ease;
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            background: #45a049;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #4CAF50;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .info {
+            background: #f8f9fa;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .info h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .info p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .info ul {
+            margin-left: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .info li {
+            margin-bottom: 5px;
+        }
+
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .button-group {
+                width: 100%;
+            }
+
+            button {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Polymorph Haxe</h1>
+        <div class="subtitle">SVG Path Interpolation Demo</div>
+
+        <div id="exampleName">Star to Circle</div>
+
+        <canvas id="canvas" width="600" height="400"></canvas>
+
+        <div class="controls">
+            <div class="slider-container">
+                <input type="range" id="progress" min="0" max="100" value="0">
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button id="prevExample">← Previous</button>
+            <button id="nextExample">Next →</button>
+        </div>
+
+        <div class="info">
+            <h3>About This Demo</h3>
+            <p>This demonstrates the Haxe port of Polymorph smoothly morphing between SVG paths.</p>
+            <ul>
+                <li>✅ Handles <strong>variable length paths</strong> (different number of points)</li>
+                <li>✅ Handles <strong>paths with holes</strong> (multiple subpaths)</li>
+                <li>✅ All SVG commands supported (M, L, H, V, C, S, Q, T, A, Z)</li>
+                <li>✅ Compiled from vanilla Haxe to JavaScript</li>
+            </ul>
+            <p style="margin-top: 10px;">
+                <strong>Drag the slider</strong> to manually control the interpolation, or watch the automatic animation.
+                Use the buttons to cycle through different shape examples.
+            </p>
+        </div>
+    </div>
+
+    <script src="canvasdemo.js"></script>
+</body>
+</html>

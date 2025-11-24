@@ -1,0 +1,9 @@
+# Haxe build file for Canvas Demo
+
+-cp src
+-main CanvasDemo
+-js demo/canvasdemo.js
+-dce full
+
+# Optimize for production
+--minify

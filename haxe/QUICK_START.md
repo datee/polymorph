@@ -14,6 +14,22 @@ cp -r haxe/src/polymorph /path/to/your/project/src/
 -cp path/to/polymorph-haxe/src
 ```
 
+## 🎨 Try the Canvas Demo First!
+
+Want to see it in action immediately?
+
+```bash
+# Build the interactive demo
+haxe build-demo.hxml
+
+# Serve it
+cd demo && python3 -m http.server 8000
+
+# Open http://localhost:8000 in your browser
+```
+
+The canvas demo shows live path morphing with interactive controls!
+
 ## 5-Minute Tutorial
 
 ### 1. Basic Interpolation
